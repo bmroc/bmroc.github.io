@@ -1,6 +1,6 @@
-    const CACHE_NAME = 'my-pwa-cache-v2';
+    const CACHE_NAME = 'my-pwa-cache-v3';
     const EXPIRY_DATE = new Date('2026-01-15T22:59:59').getTime();
-    const LAST_TIME_KEY = "last_known_time";
+    const LAST_TIME_KEY_PWA = 0;
     const urlsToCache = [
         '/fcghvjg.html'
     ];
@@ -18,6 +18,21 @@
     self.addEventListener('fetch', (event) => {
         event.respondWith(
             caches.match(event.request).then((response) => {
+                const now = new Date().getTime();
+                const lastStoredTime = localStorage.getItem(LAST_TIME_KEY_PWA);
+                if (now > EXPIRY_DATE) {
+                    return new Response('the app has expired', {
+                            status: 200,
+                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                        });
+                }
+                if (now < lastStoredTime) {
+                    return new Response('Time system error.Please set the clock automatically', {
+                            status: 200,
+                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                        });
+                }
+                localStorage.setItem(LAST_TIME_KEY_PWA, now);
                 return response || fetch(event.request);
             })
         );
@@ -35,5 +50,4 @@
                 );
             })
         );
-
     });
