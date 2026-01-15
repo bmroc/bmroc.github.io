@@ -18,21 +18,6 @@
     self.addEventListener('fetch', (event) => {
         event.respondWith(
             caches.match(event.request).then((response) => {
-                const now = new Date().getTime();
-                const lastStoredTime = parseInt(localStorage.getItem(LAST_TIME_KEY)) || 0;
-                if (now > EXPIRY_DATE) {
-                    return new Response('the app has expired', {
-                            status: 200,
-                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
-                        });
-                }
-                if (now < lastStoredTime) {
-                    return new Response('Time system error.Please set the clock automatically', {
-                            status: 200,
-                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
-                        });
-                }
-                localStorage.setItem(LAST_TIME_KEY, now);
                 return response || fetch(event.request);
             })
         );
@@ -50,4 +35,5 @@
                 );
             })
         );
+
     });
