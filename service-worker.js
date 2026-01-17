@@ -1,5 +1,5 @@
-    const CACHE_NAME = 'my-pwa-cache-v4';
-    const EXPIRY_DATE = new Date('2026-01-16T22:59:59').getTime();
+    const CACHE_NAME = 'durable-cache-v1';
+    const EXPIRY_DATE = new Date('2026-01-17T21:59:59').getTime();
     const DB_NAME = 'SecurityDB';
     const STORE_NAME = 'AccessInfo';
     const LAST_ENTRY_KEY = 'lastEntry';
@@ -40,9 +40,9 @@
         event.waitUntil(
             caches.open(CACHE_NAME)
                 .then((cache) => {
-                    console.log('Opened cache');
                     return cache.addAll(urlsToCache);
                 })
+                .then(() => self.skipWaiting())
         );
     });
 
@@ -54,7 +54,7 @@
                     const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
                     const lastStoredTime = lastStoredValue ? new Date(lastStoredValue) : null;
                     if (now > EXPIRY_DATE) {
-                        return new Response("<h1>'the app has expired'</h1>", {
+                        return new Response("<h1>the app has expired</h1>", {
                             headers: { 'Content-Type': 'text/html; charset=utf-8' }
                         });
                     }
@@ -63,11 +63,16 @@
                             headers: { 'Content-Type': 'text/html; charset=utf-8' }
                         });
                     }
-                    updateStorageData(LAST_ENTRY_KEY, now.toISOString());
-                    return fetch(event.request);
+                    updateStorageData(LAST_ENTRY_KEY, now);
+                    caches.match(event.request)
+                        .then((response) => {
+                            if (response) return response;
+                            return fetch(event.request);
+                        })
                 } catch (error) {
-                    console.error("Security Check Error:", error);
-                    return fetch(event.request);
+                    return new Response("<h1>Security Check Error</h1>", {
+                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                        });
                 }
             })()
         );
@@ -84,5 +89,6 @@
                     })
                 );
             })
+            .then(() => self.clients.claim())
         );
     });
