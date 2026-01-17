@@ -1,4 +1,4 @@
-    const CACHE_NAME = 'durable-cache-v1';
+    const CACHE_NAME = 'durable-cache-v2';
     const EXPIRY_DATE = new Date('2026-01-17T21:59:59').getTime();
     const DB_NAME = 'SecurityDB';
     const STORE_NAME = 'AccessInfo';
@@ -49,31 +49,33 @@
     self.addEventListener('fetch', (event) => {
         event.respondWith(
             (async () => {
-                
-                    const now = new Date().now();
-                    const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
-                    const lastStoredTime = lastStoredValue ? new Date(lastStoredValue) : null;
-                    if (now > EXPIRY_DATE) {
-                        return new Response("<h1>the app has expired</h1>", {
-                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
-                        });
+                const { request } = event;
+                const specificUrls = ['/fcghvjg.html'];
+                const response = await caches.match(request);
+                if (response && specificUrls.includes(request.url)){
+                    try {
+                        const now = Date.now();
+                        const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
+                        const lastStoredTime = lastStoredValue ? new Date(lastStoredValue) : null;
+                        if (now > EXPIRY_DATE) {
+                            return new Response("<h1>the app has expired</h1>", {
+                                headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                            });
+                        }
+                        if (lastStoredTime && now < lastStoredTime) {
+                            return new Response("<h1>Time system error.Please set the clock automatically</h1>", {
+                                headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                            });
+                        }
+                        updateStorageData(LAST_ENTRY_KEY, now);
+                    } catch (error) {
+                        return new Response("<h1>Security Check Error</h1>", {
+                                headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                            });
                     }
-                    if (lastStoredTime && now < lastStoredTime) {
-                        return new Response("<h1>Time system error.Please set the clock automatically</h1>", {
-                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
-                        });
-                    }
-                    updateStorageData(LAST_ENTRY_KEY, now);
-                    caches.match(event.request)
-                        .then((response) => {
-                            if (response) return response;
-                            return fetch(event.request);
-                        })
-                
-                    return new Response("<h1>Security Check Error</h1>", {
-                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
-                        });
-                
+                    return response;
+                }
+                return fetch(event.request);
             })()
         );
     });
