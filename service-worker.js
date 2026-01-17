@@ -49,7 +49,7 @@
     self.addEventListener('fetch', (event) => {
         event.respondWith(
             (async () => {
-                try {
+                
                     const now = new Date().now();
                     const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
                     const lastStoredTime = lastStoredValue ? new Date(lastStoredValue) : null;
@@ -69,11 +69,11 @@
                             if (response) return response;
                             return fetch(event.request);
                         })
-                } catch (error) {
+                
                     return new Response("<h1>Security Check Error</h1>", {
                             headers: { 'Content-Type': 'text/html; charset=utf-8' }
                         });
-                }
+                
             })()
         );
     });
