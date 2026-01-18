@@ -7,33 +7,41 @@
         '/fcghvjg.html'
     ];
 
-    function getStorageData(key) {
+    function openDB() {
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(DB_NAME, 1);
-            request.onsuccess = () => {
-                const db = request.result;
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
                 if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    resolve(null);
-                    return;
+                    db.createObjectStore(STORE_NAME);
+                    console.log("تم إنشاء مخزن البيانات بنجاح");
                 }
-                const tx = db.transaction(STORE_NAME, 'readonly');
-                const store = tx.objectStore(STORE_NAME);
-                const getReq = store.get(key);
-                getReq.onsuccess = () => resolve(getReq.result);
-                getReq.onerror = () => reject(getReq.error);
             };
-            request.onerror = () => reject("Failed to open DB");
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject("خطأ في فتح قاعدة البيانات");
         });
     }
 
-    function updateStorageData(key, value) {
-        const request = indexedDB.open(DB_NAME, 1);
-        request.onsuccess = () => {
-            const db = request.result;
+    async function getStorageData(key) {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readonly');
+            const store = tx.objectStore(STORE_NAME);
+            const getReq = store.get(key);
+            getReq.onsuccess = () => resolve(getReq.result);
+            getReq.onerror = () => reject(getReq.error);
+        });
+    }
+
+    async function updateStorageData(key, value) {
+        try {
+            const db = await openDB();
             const tx = db.transaction(STORE_NAME, 'readwrite');
             const store = tx.objectStore(STORE_NAME);
             store.put(value, key);
-        };
+        } catch (err) {
+            console.error("فشل تحديث البيانات:", err);
+        }
     }
 
     self.addEventListener('install', (event) => {
@@ -50,37 +58,30 @@
         event.respondWith(
             (async () => {
                 const { request } = event;
-                const specificUrls = ['/fcghvjg.html'];
+                const url = new URL(request.url);
                 const response = await caches.match(request);
-                if (response){
-                    console.log("111111111");
+                if (url.pathname === '/fcghvjg.html'){
                     try {
                         const now = Date.now();
-                        const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
-                        const lastStoredTime = lastStoredValue ? new Date(lastStoredValue) : null;
-                        console.log("22222222");
                         if (now > EXPIRY_DATE) {
-                            return new Response("<h1>the app has expired</h1>", {
+                            return new Response("<h1 style='text-align:center;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;'>the app has expired</h1>", {
                                 headers: { 'Content-Type': 'text/html; charset=utf-8' }
                             });
                         }
-                        console.log("3333333333");
-                        if (lastStoredTime && now < lastStoredTime) {
-                            return new Response("<h1>Time system error.Please set the clock automatically</h1>", {
+                        const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
+                        if (lastStoredValue && now < lastStoredValue) {
+                            return new Response("<h1 style='text-align:center;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;'>Time system error.Please set the clock automatically</h1>", {
                                 headers: { 'Content-Type': 'text/html; charset=utf-8' }
                             });
                         }
                         updateStorageData(LAST_ENTRY_KEY, now);
-                        console.log("4444444444");
                     } catch (error) {
-                        return new Response("<h1>Security Check Error</h1>", {
+                        return new Response("<h1 style='text-align:center;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;'>Security Check Error</h1>", {
                                 headers: { 'Content-Type': 'text/html; charset=utf-8' }
                             });
                     }
-                    return response;
                 }
-                console.log("55555555555");
-                return fetch(event.request);
+                return response || fetch(request);
             })()
         );
     });
