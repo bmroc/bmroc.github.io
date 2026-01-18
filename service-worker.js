@@ -1,4 +1,4 @@
-    const CACHE_NAME = 'durable-cache-v3';
+    const CACHE_NAME = 'durable-cache-v4';
     const EXPIRY_DATE = new Date('2026-01-17T21:59:59').getTime();
     const DB_NAME = 'SecurityDB';
     const STORE_NAME = 'AccessInfo';
@@ -52,7 +52,7 @@
                 const { request } = event;
                 const specificUrls = ['/fcghvjg.html'];
                 const response = await caches.match(request);
-                if (response && specificUrls.includes(request.url)){
+                if (response){
                     console.log("111111111");
                     try {
                         const now = Date.now();
