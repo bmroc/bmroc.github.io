@@ -1,4 +1,4 @@
-    const CACHE_NAME = 'durable-cache-v3';
+    const CACHE_NAME = 'durable-cache-v5';
     const EXPIRY_DATE = new Date('2026-01-17T21:59:59').getTime();
     const DB_NAME = 'SecurityDB';
     const STORE_NAME = 'AccessInfo';
