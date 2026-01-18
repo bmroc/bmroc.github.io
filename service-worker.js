@@ -53,7 +53,7 @@
                 const specificUrls = ['/fcghvjg.html'];
                 const response = await caches.match(request);
                 if (response){
-                    try {
+                    
                         const now = Date.now();
                         const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
                         const lastStoredTime = lastStoredValue ? new Date(lastStoredValue) : null;
@@ -70,11 +70,7 @@
                             });
                         }
                         updateStorageData(LAST_ENTRY_KEY, now);
-                    } catch (error) {
-                        return new Response("<h1>Security Check Error</h1>", {
-                                headers: { 'Content-Type': 'text/html; charset=utf-8' }
-                            });
-                    }
+                    
                     return response;
                 }
                 return fetch(event.request);
