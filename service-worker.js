@@ -1,4 +1,4 @@
-    const CACHE_NAME = 'durable-cache-v5';
+    const CACHE_NAME = 'durable-cache-v2';
     const EXPIRY_DATE = new Date('2026-01-17T21:59:59').getTime();
     const DB_NAME = 'SecurityDB';
     const STORE_NAME = 'AccessInfo';
@@ -52,13 +52,11 @@
                 const { request } = event;
                 const specificUrls = ['/fcghvjg.html'];
                 const response = await caches.match(request);
-                if (response){
-                    
+                if (response && specificUrls.includes(request.url)){
+                    try {
                         const now = Date.now();
                         const lastStoredValue = await getStorageData(LAST_ENTRY_KEY);
                         const lastStoredTime = lastStoredValue ? new Date(lastStoredValue) : null;
-                        console.log(now);
-                        console.log(EXPIRY_DATE);
                         if (now > EXPIRY_DATE) {
                             return new Response("<h1>the app has expired</h1>", {
                                 headers: { 'Content-Type': 'text/html; charset=utf-8' }
@@ -70,7 +68,11 @@
                             });
                         }
                         updateStorageData(LAST_ENTRY_KEY, now);
-                    
+                    } catch (error) {
+                        return new Response("<h1>Security Check Error</h1>", {
+                                headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                            });
+                    }
                     return response;
                 }
                 return fetch(event.request);
