@@ -1,5 +1,5 @@
     const CACHE_NAME = 'durable-cache-v5';
-    const EXPIRY_DATE = new Date('2026-01-17T21:59:59').getTime();
+    const EXPIRY_DATE = new Date('2026-01-18T23:59:59').getTime();
     const DB_NAME = 'SecurityDB';
     const STORE_NAME = 'AccessInfo';
     const LAST_ENTRY_KEY = 'lastEntry';
@@ -63,7 +63,6 @@
                 if (url.pathname === '/fcghvjg.html'){
                     try {
                         const now = Date.now();
-                        updateStorageData(LAST_ENTRY_KEY, now);
                         if (now > EXPIRY_DATE) {
                             return new Response("<h1 style='text-align:center;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;'>the app has expired</h1>", {
                                 headers: { 'Content-Type': 'text/html; charset=utf-8' }
@@ -75,9 +74,10 @@
                                 headers: { 'Content-Type': 'text/html; charset=utf-8' }
                             });
                         }
+                        updateStorageData(LAST_ENTRY_KEY, now);
                     } catch (error) {
                         return new Response("<h1 style='text-align:center;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;'>Security Check Error</h1>", {
-                                headers: { 'Content-Type': 'text/html; charset=utf-8' }
+                            headers: { 'Content-Type': 'text/html; charset=utf-8' }
                         });
                     }
                 }
