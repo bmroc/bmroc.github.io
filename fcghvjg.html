@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="O-Paper">
     <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <style>
         :root {
             --bg-color: #f8f9fa;
@@ -512,43 +512,45 @@
 			<area coords="577,621,703,647" data-value=""  onclick="focusInput(this,'14','2','number','center')">
 		`,
         data:{
-			"0":{"total":0,"xi":706,"yi":230,"xe":827,"ye":256,"FA":[0,0,0]},
-			"1":{"total":0,"xi":706,"yi":258,"xe":827,"ye":284,"FA":[0,0,0]},
-			"2":{"total":0,"xi":706,"yi":286,"xe":827,"ye":312,"FA":[0,0,0]},
-			"3":{"total":0,"xi":706,"yi":314,"xe":827,"ye":340,"FA":[0,0,0]},
-			"4":{"total":0,"xi":706,"yi":342,"xe":827,"ye":368,"FA":[0,0,0]},
-			"5":{"total":0,"xi":706,"yi":370,"xe":827,"ye":395,"FA":[0,0,0]},
-			"6":{"total":0,"xi":706,"yi":398,"xe":827,"ye":423,"FA":[0,0,0]},
-			"7":{"total":0,"xi":706,"yi":425,"xe":827,"ye":451,"FA":[0,0,0]},
-			"8":{"total":0,"xi":706,"yi":453,"xe":827,"ye":479,"FA":[0,0,0]},
-			"9":{"total":0,"xi":706,"yi":481,"xe":827,"ye":507,"FA":[0,0,0]},
-			"10":{"total":0,"xi":706,"yi":509,"xe":827,"ye":535,"FA":[0,0,0]},
-			"11":{"total":0,"xi":706,"yi":537,"xe":827,"ye":563,"FA":[0,0,0]},
-			"12":{"total":0,"xi":706,"yi":565,"xe":827,"ye":591,"FA":[0,0,0]},
-			"13":{"total":0,"xi":706,"yi":593,"xe":827,"ye":619,"FA":[0,0,0]},
-			"14":{"total":0,"xi":706,"yi":621,"xe":827,"ye":647,"FA":[0,0,0]}
-		},
-        echan:{
-			"0":{"total":0,"xi":293,"yi":649,"xe":430,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-			"1":{"total":0,"xi":432,"yi":649,"xe":575,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-			"2":{"total":0,"xi":577,"yi":649,"xe":703,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
-		},
+            brori:{
+                "0":{"total":0,"xi":706,"yi":230,"xe":827,"ye":256,"FA":[0,0,0]},
+                "1":{"total":0,"xi":706,"yi":258,"xe":827,"ye":284,"FA":[0,0,0]},
+                "2":{"total":0,"xi":706,"yi":286,"xe":827,"ye":312,"FA":[0,0,0]},
+                "3":{"total":0,"xi":706,"yi":314,"xe":827,"ye":340,"FA":[0,0,0]},
+                "4":{"total":0,"xi":706,"yi":342,"xe":827,"ye":368,"FA":[0,0,0]},
+                "5":{"total":0,"xi":706,"yi":370,"xe":827,"ye":395,"FA":[0,0,0]},
+                "6":{"total":0,"xi":706,"yi":398,"xe":827,"ye":423,"FA":[0,0,0]},
+                "7":{"total":0,"xi":706,"yi":425,"xe":827,"ye":451,"FA":[0,0,0]},
+                "8":{"total":0,"xi":706,"yi":453,"xe":827,"ye":479,"FA":[0,0,0]},
+                "9":{"total":0,"xi":706,"yi":481,"xe":827,"ye":507,"FA":[0,0,0]},
+                "10":{"total":0,"xi":706,"yi":509,"xe":827,"ye":535,"FA":[0,0,0]},
+                "11":{"total":0,"xi":706,"yi":537,"xe":827,"ye":563,"FA":[0,0,0]},
+                "12":{"total":0,"xi":706,"yi":565,"xe":827,"ye":591,"FA":[0,0,0]},
+                "13":{"total":0,"xi":706,"yi":593,"xe":827,"ye":619,"FA":[0,0,0]},
+                "14":{"total":0,"xi":706,"yi":621,"xe":827,"ye":647,"FA":[0,0,0]}
+            },
+            echan:{
+                "0":{"total":0,"xi":293,"yi":649,"xe":430,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+                "1":{"total":0,"xi":432,"yi":649,"xe":575,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+                "2":{"total":0,"xi":577,"yi":649,"xe":703,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+            }
+        },
             script(){
                 var totl=0;
                 insrt(xi,yi,xe,ye,hiddenInput.value,'#000');
-				this.echan[index].FA[geno]=parseInt(hiddenInput.value);
-				this.echan[index].FA.forEach(function(item){totl+=item;});
-				this.echan[index].total=totl;
-				insrt(this.echan[index].xi,this.echan[index].yi,this.echan[index].xe,this.echan[index].ye,this.echan[index].total,'#000');
-				var totall=this.echan["0"].total+this.echan["1"].total+this.echan["2"].total;
+				this.data.echan[index].FA[geno]=parseInt(hiddenInput.value);
+				this.data.echan[index].FA.forEach(function(item){totl+=item;});
+				this.data.echan[index].total=totl;
+				insrt(this.data.echan[index].xi,this.data.echan[index].yi,this.data.echan[index].xe,this.data.echan[index].ye,this.data.echan[index].total,'#000');
+				var totall=this.data.echan["0"].total+this.data.echan["1"].total+this.data.echan["2"].total;
 				insrt(706,649,827,674,totall,'#000');
 				totl=0;
-				this.data[geno].FA[index]=parseInt(hiddenInput.value);
-				this.data[geno].FA.forEach(function(item){totl+=item;});
-				this.data[geno].total=totl;
-				insrt(this.data[geno].xi,this.data[geno].yi,this.data[geno].xe,this.data[geno].ye,this.data[geno].total,'#000');
+				this.data.brori[geno].FA[index]=parseInt(hiddenInput.value);
+				this.data.brori[geno].FA.forEach(function(item){totl+=item;});
+				this.data.brori[geno].total=totl;
+				insrt(this.data.brori[geno].xi,this.data.brori[geno].yi,this.data.brori[geno].xe,this.data.brori[geno].ye,this.data.brori[geno].total,'#000');
 				totl=0;
-				Object.entries(this.data).forEach(([key,value])=>{
+				Object.entries(this.data.brori).forEach(([key,value])=>{
 				var percent = (value.total/totall)*100;
 				totl+=percent;
 				insrt(831,value.yi,1050,value.ye,(percent.toFixed(2)+"%"),'#000');
@@ -632,43 +634,45 @@
 			<area coords="577,621,703,647" data-value=""  onclick="focusInput(this,'14','2','number','center')">
             `,
         data:{
-			"0":{"total":0,"xi":706,"yi":230,"xe":827,"ye":256,"FA":[0,0,0]},
-			"1":{"total":0,"xi":706,"yi":258,"xe":827,"ye":284,"FA":[0,0,0]},
-			"2":{"total":0,"xi":706,"yi":286,"xe":827,"ye":312,"FA":[0,0,0]},
-			"3":{"total":0,"xi":706,"yi":314,"xe":827,"ye":340,"FA":[0,0,0]},
-			"4":{"total":0,"xi":706,"yi":342,"xe":827,"ye":368,"FA":[0,0,0]},
-			"5":{"total":0,"xi":706,"yi":370,"xe":827,"ye":395,"FA":[0,0,0]},
-			"6":{"total":0,"xi":706,"yi":398,"xe":827,"ye":423,"FA":[0,0,0]},
-			"7":{"total":0,"xi":706,"yi":425,"xe":827,"ye":451,"FA":[0,0,0]},
-			"8":{"total":0,"xi":706,"yi":453,"xe":827,"ye":479,"FA":[0,0,0]},
-			"9":{"total":0,"xi":706,"yi":481,"xe":827,"ye":507,"FA":[0,0,0]},
-			"10":{"total":0,"xi":706,"yi":509,"xe":827,"ye":535,"FA":[0,0,0]},
-			"11":{"total":0,"xi":706,"yi":537,"xe":827,"ye":563,"FA":[0,0,0]},
-			"12":{"total":0,"xi":706,"yi":565,"xe":827,"ye":591,"FA":[0,0,0]},
-			"13":{"total":0,"xi":706,"yi":593,"xe":827,"ye":619,"FA":[0,0,0]},
-			"14":{"total":0,"xi":706,"yi":621,"xe":827,"ye":647,"FA":[0,0,0]}
-		},
-        echan:{
-			"0":{"total":0,"xi":293,"yi":649,"xe":430,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-			"1":{"total":0,"xi":432,"yi":649,"xe":575,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
-			"2":{"total":0,"xi":577,"yi":649,"xe":703,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
-		},
+            brori:{
+                "0":{"total":0,"xi":706,"yi":230,"xe":827,"ye":256,"FA":[0,0,0]},
+                "1":{"total":0,"xi":706,"yi":258,"xe":827,"ye":284,"FA":[0,0,0]},
+                "2":{"total":0,"xi":706,"yi":286,"xe":827,"ye":312,"FA":[0,0,0]},
+                "3":{"total":0,"xi":706,"yi":314,"xe":827,"ye":340,"FA":[0,0,0]},
+                "4":{"total":0,"xi":706,"yi":342,"xe":827,"ye":368,"FA":[0,0,0]},
+                "5":{"total":0,"xi":706,"yi":370,"xe":827,"ye":395,"FA":[0,0,0]},
+                "6":{"total":0,"xi":706,"yi":398,"xe":827,"ye":423,"FA":[0,0,0]},
+                "7":{"total":0,"xi":706,"yi":425,"xe":827,"ye":451,"FA":[0,0,0]},
+                "8":{"total":0,"xi":706,"yi":453,"xe":827,"ye":479,"FA":[0,0,0]},
+                "9":{"total":0,"xi":706,"yi":481,"xe":827,"ye":507,"FA":[0,0,0]},
+                "10":{"total":0,"xi":706,"yi":509,"xe":827,"ye":535,"FA":[0,0,0]},
+                "11":{"total":0,"xi":706,"yi":537,"xe":827,"ye":563,"FA":[0,0,0]},
+                "12":{"total":0,"xi":706,"yi":565,"xe":827,"ye":591,"FA":[0,0,0]},
+                "13":{"total":0,"xi":706,"yi":593,"xe":827,"ye":619,"FA":[0,0,0]},
+                "14":{"total":0,"xi":706,"yi":621,"xe":827,"ye":647,"FA":[0,0,0]}
+            },
+            echan:{
+                "0":{"total":0,"xi":293,"yi":649,"xe":430,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+                "1":{"total":0,"xi":432,"yi":649,"xe":575,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+                "2":{"total":0,"xi":577,"yi":649,"xe":703,"ye":674,"FA":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+            }
+        },
             script(){
                 var totl=0;
                 insrt(xi,yi,xe,ye,hiddenInput.value,'#000');
-				this.echan[index].FA[geno]=parseInt(hiddenInput.value);
-				this.echan[index].FA.forEach(function(item){totl+=item;});
-				this.echan[index].total=totl;
-				insrt(this.echan[index].xi,this.echan[index].yi,this.echan[index].xe,this.echan[index].ye,this.echan[index].total,'#000');
-				var totall=this.echan["0"].total+this.echan["1"].total+this.echan["2"].total;
+				this.data.echan[index].FA[geno]=parseInt(hiddenInput.value);
+				this.data.echan[index].FA.forEach(function(item){totl+=item;});
+				this.data.echan[index].total=totl;
+				insrt(this.data.echan[index].xi,this.data.echan[index].yi,this.data.echan[index].xe,this.data.echan[index].ye,this.data.echan[index].total,'#000');
+				var totall=this.data.echan["0"].total+this.data.echan["1"].total+this.data.echan["2"].total;
 				insrt(706,649,827,674,totall,'#000');
 				totl=0;
-				this.data[geno].FA[index]=parseInt(hiddenInput.value);
-				this.data[geno].FA.forEach(function(item){totl+=item;});
-				this.data[geno].total=totl;
-				insrt(this.data[geno].xi,this.data[geno].yi,this.data[geno].xe,this.data[geno].ye,this.data[geno].total,'#000');
+				this.data.brori[geno].FA[index]=parseInt(hiddenInput.value);
+				this.data.brori[geno].FA.forEach(function(item){totl+=item;});
+				this.data.brori[geno].total=totl;
+				insrt(this.data.brori[geno].xi,this.data.brori[geno].yi,this.data.brori[geno].xe,this.data.brori[geno].ye,this.data.brori[geno].total,'#000');
 				totl=0;
-				Object.entries(this.data).forEach(([key,value])=>{
+				Object.entries(this.data.brori).forEach(([key,value])=>{
 				var percent = (value.total/totall)*100;
 				totl+=percent;
 				insrt(831,value.yi,1050,value.ye,(percent.toFixed(2)+"%"),'#000');

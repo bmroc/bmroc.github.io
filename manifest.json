@@ -3,7 +3,7 @@
   "short_name": "O-Paper",
   "description": "Operational Paper App",
   "start_url": "/fcghvjg.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "display_override": ["window-controls-overlay","minimal-ui"],
   "orientation":"portrait",
   "background_color": "#ffffff",
