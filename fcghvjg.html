@@ -283,36 +283,7 @@
             </div>
         </div>
     </div>
-    <div id="lock-screen">
-        <h2 id="lock-message"></h2>
-    </div>
     <script>
-        (function checkAccess() {
-            const EXPIRATION_DATE = new Date("2026-01-17T21:59:59").getTime();
-            const LAST_TIME_KEY = "last_known_time";
-            const now = Date.now();
-            const lastStoredTime = parseInt(localStorage.getItem(LAST_TIME_KEY)) || 0;
-
-            // التحقق من تاريخ الانتهاء
-            if (now > EXPIRATION_DATE) {
-                blockAccess("the app has expired");
-                return;
-            }
-
-            if (now < lastStoredTime) {
-                blockAccess("Time system error.Please set the clock automatically");
-                return;
-            }
-
-            localStorage.setItem(LAST_TIME_KEY, now);
-        })();
-        function blockAccess(msg) {
-            const lockScreen = document.getElementById('lock-screen');
-            document.getElementById('lock-message').innerText = msg;
-            lockScreen.style.display = 'flex';
-            window.stop(); 
-        }
-
         const mainImage = document.getElementById('mainImage');
         const paper = document.getElementById('paper');
         const container = document.getElementById('container');
