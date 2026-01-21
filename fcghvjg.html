@@ -3,7 +3,7 @@
 <head>
     <script>
         (function() {
-            if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone===true))
+            if (!window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone===false))
                 window.location.href = "index.html";
         })();
     </script>
