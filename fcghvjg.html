@@ -4,7 +4,7 @@
     <script>
         (function() {
             if (!window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone===false))
-                window.location.href = "index.html";
+                window.location.href = "/";
         })();
     </script>
     <meta charset="UTF-8">
@@ -1070,6 +1070,16 @@
 			ctx.fillText(val,xo+3,yo+2);
 		}
 	}
+    </script>
+    <script>
+        (function() {
+            const EXPIRY_DATE = new Date('2026-01-26T00:00:00').getTime();
+            const now = Date.now();
+            const diffDays = Math.ceil((EXPIRY_DATE - now) / (1000 * 60 * 60 * 24));
+            if (diffDays > 0 && diffDays <= 7) {
+                alert("Heads up! Only " + diffDays + " days of access remaining.");
+            }
+        })();
     </script>
 </body>
 </html>
