@@ -76,7 +76,7 @@
                         }
                         updateStorageData(LAST_ENTRY_KEY, now);
                     } catch (error) {
-                        return new Response("<h1 style='text-align:center;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;'>Security Check Error</h1>", {
+                        return new Response("", {
                             headers: { 'Content-Type': 'text/html; charset=utf-8' }
                         });
                     }
@@ -101,3 +101,4 @@
         );
 
     });
+
